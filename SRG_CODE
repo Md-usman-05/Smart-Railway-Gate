@@ -1,0 +1,28 @@
+SMART RAILWAY GATE USING ARDUINO
+CODE: -
+#include <Servo.h>
+Servo gate; // Define servo motor
+int trig = 10, echo = 11;
+float cm;
+
+void setup () {
+  gate.attach(9);     // Attach servo to pin 9
+  pinMode(trig, OUTPUT);
+  pinMode(echo, INPUT);
+}
+ 
+void loop () {
+  digitalWrite(trig, LOW);
+  delay (1);
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(50);
+  digitalWrite(trig, LOW);
+  cm = pulseIn(echo, HIGH)/68.82;
+  if (cm < 10) {
+    gate.write(90);   // Close the gate
+    delay (4000);
+  } else {
+    gate.write(0);    // Open the gate
+    delay (20);
+  }
+}
